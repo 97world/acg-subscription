@@ -1,0 +1,31 @@
+{
+  "name": "acg-subscription-server",
+  "version": "1.0.0",
+  "description": "acg-subscription server",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:97world/acg-subscription.git"
+  },
+  "author": "Ward",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.0.10",
+    "nodemailer": "^4.6.3",
+    "superagent": "^3.8.2",
+    "winston": "^3.0.0-rc3",
+    "winston-daily-rotate-file": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/**"
+    ]
+  }
+}
