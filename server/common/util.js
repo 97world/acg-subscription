@@ -1,5 +1,7 @@
+const nodemailer = require('nodemailer');
 const url = require('url');
-const log = require('../log');
+
+const log = require('./log');
 
 const logger = log.loggers.get('server');
 
@@ -75,9 +77,25 @@ function parseRelativeURL(relativeURL, currentPageURL) {
   return url.resolve(protocol + '//' + host + pathname, relativeURL);
 };
 
+async function sendMail(option) {
+  const user = 'no-reply@dtoweb.com';
+  const pass = 'YDn9uxr8cfYxPdLR';
+  const mailTransport = nodemailer.createTransport({
+    host: 'smtp.exmail.qq.com',
+    port: 465,
+    secureConnection: true,
+    auth: { user, pass },
+  });
+  option.from = user;
+  const sendResult = await mailTransport.sendMail(option);
+  logger.info('send notification to %s success, sendResult = %s',
+                sendInfo.email, JSON.stringify(sendResult));
+};
+
 module.exports = {
   wait,
   getEpisodeType,
   getEpisodeInfo,
   parseRelativeURL,
+  sendMail,
 };

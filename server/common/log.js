@@ -1,12 +1,13 @@
 const winston = require('winston');
 const path = require('path');
+const moment = require('moment');
 require('winston-daily-rotate-file');
 
 const consoleTransport = new winston.transports.Console();
 const dailyRotateFileTransport = {
   server: new winston.transports.DailyRotateFile({
     filename: 'server-%DATE%.log',
-    dirname: path.join(__dirname, '../../log/'),
+    dirname: path.join(__dirname, '../log/'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
@@ -14,7 +15,7 @@ const dailyRotateFileTransport = {
   }),
   spider: new winston.transports.DailyRotateFile({
     filename: 'spider-%DATE%.log',
-    dirname: path.join(__dirname, '../../log/'),
+    dirname: path.join(__dirname, '../log/'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
@@ -22,7 +23,7 @@ const dailyRotateFileTransport = {
   }),
   monitor: new winston.transports.DailyRotateFile({
     filename: 'monitor-%DATE%.log',
-    dirname: path.join(__dirname, '../../log/'),
+    dirname: path.join(__dirname, '../log/'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
@@ -32,7 +33,7 @@ const dailyRotateFileTransport = {
 
 const printfFormatter = winston.format.printf;
 const customFormatter = printfFormatter(info => {
-  return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
+  return `${moment().format('YYYY-MM-DD HH:mm:ss.SSS')} [${info.label}] ${info.level}: ${info.message}`;
 });
 
 const loggerKey = ['server', 'spider', 'monitor'];
@@ -42,7 +43,6 @@ loggerKey.forEach(key => {
     format: winston.format.combine(
       winston.format.label({ label: key }),
       winston.format.splat(),
-      winston.format.timestamp(),
       customFormatter,
     ),
     level: 'debug',

@@ -8,50 +8,50 @@ const Topic = require('../../model/topic');
 
 const logger = log.loggers.get('spider');
 
-async function spider(spiderURL) {
-  logger.info('crawling URL: %s', spiderURL);
+function resolveSingleItemDOM($item, spiderURL) {
+  const name = $item.find('.title>a').text().trim();
+  const episodeInfo = util.getEpisodeInfo(name);
+  return {
+    name,
+    type: util.getEpisodeType(name),
+    subTitleTeam: $item.find('.title>span').first().text().trim(),
+    magnetURL: $item.find('.download-arrow.arrow-magnet').attr('href'),
+    publishAt: $item.children('td').find('span').first().text().trim(),
+    category: $item.find('.sort-2').text().trim(),
+    size: $item.children('td').eq(4).text().trim(),
+    seeding: $item.children('td').eq(5).text().trim(),
+    downloading: $item.children('td').eq(6).text().trim(),
+    downloaded: $item.children('td').eq(7).text().trim(),
+    episodeStr: episodeInfo.episodeStr,
+    episodeNum: episodeInfo.episodeNum,
+    pageURL: util.parseRelativeURL($item.find('.title>a').attr('href'), spiderURL),
+  };
+};
 
+function getNextBtn($) {
+  return $('#topic_list').siblings('.nav_title').children('a');
+};
+
+async function spider(spiderURL) {
+  const startAt = new Date().getTime();
   const response = await request.get(spiderURL);
+  const endAt = new Date().getTime();
   const html = response.text;
   const $ = cheerio.load(html);
 
+  logger.info('crawling URL: %s [%dms]', spiderURL, endAt - startAt);
+
   const list = $('#topic_list tbody>tr');
   list.each(index => {
-    const item = list.eq(index);
-    const name = item.find('.title>a').text().trim();
-    const type = util.getEpisodeType(name);
-    const subTitleTeam = item.find('.title>span').first().text().trim();
-    const magnetURL = item.find('.download-arrow.arrow-magnet').attr('href');
-    const publishAt = item.children('td').find('span').first().text().trim();
-    const category = item.find('.sort-2').text().trim();
-    const size = item.children('td').eq(4).text().trim();
-    const seeding = item.children('td').eq(5).text().trim();
-    const downloading = item.children('td').eq(6).text().trim();
-    const downloaded = item.children('td').eq(7).text().trim();
-    const episodeInfo = util.getEpisodeInfo(name);
-    const episodeStr = episodeInfo.episodeStr;
-    const episodeNum = episodeInfo.episodeNum;
-    const pageURL = util.parseRelativeURL(item.find('.title>a').attr('href'), spiderURL);
-
+    const $item = list.eq(index);
+    const data = resolveSingleItemDOM($item, spiderURL);
     const topic = new Topic({
-      name,
-      type,
-      category,
-      subTitleTeam,
-      episodeStr,
-      episodeNum,
-      magnetURL,
-      size,
-      seeding,
-      downloading,
-      downloaded,
-      pageURL,
-      publishAt,
+      name: 'test'
     });
     topic.save();
   });
 
-  let btn4NextPage = $('#topic_list').siblings('.nav_title').children('a');
+  let btn4NextPage = getNextBtn($);
   if (btn4NextPage.length) {
     btn4NextPage = btn4NextPage.last();
     if (btn4NextPage.text() === '下一頁') {

@@ -31,6 +31,7 @@ mongoose.connection.on('error', err => {
 //     latestItemURL: '',
 //     disabled: false,
 //     episodeInfo: null,
+//     isNotify4SameEpisode: false,
 //   },
 //   {
 //     url: 'https://share.dmhy.org/topics/list?keyword=%E4%BA%94%E8%91%89%E8%8D%89',  // 黑色五叶草
@@ -38,6 +39,7 @@ mongoose.connection.on('error', err => {
 //     latestItemURL: '',
 //     disabled: false,
 //     episodeInfo: null,
+//     isNotify4SameEpisode: true,
 //   },
 // ];
 // monitor(taskList);
