@@ -15,6 +15,7 @@
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
     "mongoose": "^5.0.10",
+    "nodejieba": "^2.2.5",
     "nodemailer": "^4.6.3",
     "superagent": "^3.8.2",
     "winston": "^3.0.0-rc3",
