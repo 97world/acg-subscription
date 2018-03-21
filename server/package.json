@@ -11,6 +11,7 @@
   },
   "author": "Ward",
   "dependencies": {
+    "art-template": "^4.12.2",
     "cheerio": "^1.0.0-rc.2",
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
