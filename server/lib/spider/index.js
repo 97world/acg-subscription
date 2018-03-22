@@ -2,9 +2,9 @@ const url = require('url');
 const cheerio = require('cheerio');
 const request = require('superagent');
 
-const log = require('../../common/log');
-const util = require('../../common/util');
-const Topic = require('../../model/topic');
+const log = require('common/log');
+const util = require('common/util');
+const Topic = require('model/topic');
 
 const logger = log.loggers.get('spider');
 

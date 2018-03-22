@@ -3,8 +3,8 @@ const request = require('superagent');
 const cheerio = require('cheerio');
 const template = require('art-template');
 
-const log = require('../../common/log');
-const util = require('../../common/util');
+const log = require('common/log');
+const util = require('common/util');
 
 const logger = log.loggers.get('monitor');
 

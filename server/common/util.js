@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 const url = require('url');
 
-const log = require('./log');
-const config = require('./config');
+const log = require('common/log');
+const config = require('common/config');
 
 const logger = log.loggers.get('server');
 
