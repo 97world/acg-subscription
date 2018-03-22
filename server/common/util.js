@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const url = require('url');
 
 const log = require('./log');
+const config = require('./config');
 
 const logger = log.loggers.get('server');
 
@@ -78,12 +79,12 @@ function parseRelativeURL(relativeURL, currentPageURL) {
 };
 
 async function sendMail(option) {
-  const user = 'no-reply@dtoweb.com';
-  const pass = 'YDn9uxr8cfYxPdLR';
+  const user = config.mail.user;
+  const pass = config.mail.pass;
   const mailTransport = nodemailer.createTransport({
-    host: 'smtp.exmail.qq.com',
-    port: 465,
-    secureConnection: true,
+    host: config.mail.host,
+    port: config.mail.host,
+    secureConnection: config.mail.secureConnection,
     auth: { user, pass },
   });
   option.from = user;
