@@ -7,7 +7,7 @@ const consoleTransport = new winston.transports.Console();
 const dailyRotateFileTransport = {
   server: new winston.transports.DailyRotateFile({
     filename: 'server-%DATE%.log',
-    dirname: path.join(__dirname, '../log/'),
+    dirname: path.join(__dirname, '../../log/'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
@@ -15,7 +15,7 @@ const dailyRotateFileTransport = {
   }),
   spider: new winston.transports.DailyRotateFile({
     filename: 'spider-%DATE%.log',
-    dirname: path.join(__dirname, '../log/'),
+    dirname: path.join(__dirname, '../../log/'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
@@ -23,7 +23,7 @@ const dailyRotateFileTransport = {
   }),
   monitor: new winston.transports.DailyRotateFile({
     filename: 'monitor-%DATE%.log',
-    dirname: path.join(__dirname, '../log/'),
+    dirname: path.join(__dirname, '../../log/'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
