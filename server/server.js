@@ -2,7 +2,6 @@ process.env.NODE_PATH = __dirname;
 require('module').Module._initPaths();
 
 const Koa = require('koa');
-const koaRouter = require('koa-router');
 const mongoose = require('mongoose');
 const log = require('common/log');
 const spider = require('lib/spider');
