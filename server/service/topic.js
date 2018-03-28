@@ -18,10 +18,17 @@ async function update(content) {
   return await Topic.findByIdAndUpdate(content.id, content);
 };
 
+async function find(query) {
+  return await Topic.find(query);
+};
+
+async function findOne(query) {
+  return await Topic.findOne(query);
+};
+
 module.exports = {
-  findOne: Topic.findOne,
-  find: Topic.find,
-  where: Topic.where,
+  find,
+  findOne,
   get,
   add,
   del,
