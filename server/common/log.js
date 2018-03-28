@@ -59,11 +59,13 @@ loggerKey.forEach(key => {
 
 const logger = winston.loggers.get('server');
 
-async function middleWare(ctx, next) {
+async function middleware(ctx, next) {
+  const startAt = new Date().getTime();
   await next();
   let logLevel = '';
-  let message = `${ctx.method} ${ctx.originalUrl} ${ctx.status} ${ctx.ms}`;
-  let statusCode = ctx.status;
+  const responseTime = new Date().getTime() - startAt;
+  const message = `${ctx.method} ${ctx.originalUrl} ${ctx.status} ${responseTime + 'ms'} ${ctx.message}`;
+  const statusCode = ctx.status;
   if (statusCode >= 500) {
     logLevel = 'error';
   }
@@ -76,4 +78,7 @@ async function middleWare(ctx, next) {
   logger.log(logLevel, message);
 };
 
-module.exports = winston;
+module.exports = {
+  loggers: winston.loggers,
+  middleware,
+};
