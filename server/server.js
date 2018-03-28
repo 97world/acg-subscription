@@ -5,11 +5,14 @@ const Koa = require('koa');
 const mongoose = require('mongoose');
 const log = require('common/log');
 const spider = require('lib/spider');
+const router = require('common/router');
 const monitor = require('lib/monitor');
 
 const server = new Koa();
 const logger = log.loggers.get('server');
 
+server.use(log.middleware);
+server.use(router.routes());
 server.listen(3000);
 
 logger.info('start koa server success, port = %d', 3000);
