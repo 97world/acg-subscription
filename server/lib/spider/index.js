@@ -4,7 +4,7 @@ const request = require('superagent');
 
 const log = require('common/log');
 const util = require('common/util');
-const Topic = require('model/topic');
+const topicService = require('service/topic');
 
 const logger = log.loggers.get('spider');
 
@@ -42,13 +42,10 @@ async function spider(spiderURL) {
   logger.info('crawling URL: %s [%dms]', spiderURL, endAt - startAt);
 
   const list = $('#topic_list tbody>tr');
-  list.each(index => {
+  list.each(async index => {
     const $item = list.eq(index);
     const data = resolveSingleItemDOM($item, spiderURL);
-    const topic = new Topic({
-      name: 'test'
-    });
-    topic.save();
+    await topicService.add(data);
   });
 
   let btn4NextPage = getNextBtn($);
