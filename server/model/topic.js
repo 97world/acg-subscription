@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const topicSchema = new Schema({
-  name: { type: String },
+  name: { type: String, required: true },
   subTitleTeam: { type: String },
   magnetURL: { type: String },
   publishAt: { type: String },

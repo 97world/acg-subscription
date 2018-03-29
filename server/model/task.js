@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const taskSchema = new Schema({
-  url: { type: String },
+  url: { type: String, required: true, unique: true },
   checkedAt: { type: Date },
   latestURL: { type: String },
   latestEpisodeStr: { type: String },
