@@ -3,15 +3,19 @@ require('module').Module._initPaths();
 
 const Koa = require('koa');
 const mongoose = require('mongoose');
+const koaBodyparser = require('koa-bodyparser');
 const log = require('common/log');
 const spider = require('lib/spider');
 const router = require('common/router');
 const monitor = require('lib/monitor');
+const onerror = require('middleware/onerror');
 
 const server = new Koa();
 const logger = log.loggers.get('server');
 
+server.use(onerror(logger));
 server.use(log.middleware);
+server.use(koaBodyparser());
 server.use(router.routes());
 server.listen(3000);
 
