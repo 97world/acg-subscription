@@ -1,4 +1,8 @@
 module.exports = {
+  database: {
+    port: 3000,
+    address: '127.0.0.1'
+  },
   mail: {
     user: 'no-reply@dtoweb.com',
     pass: 'YDn9uxr8cfYxPdLR',

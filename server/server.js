@@ -4,9 +4,11 @@ require('module').Module._initPaths();
 const Koa = require('koa');
 const mongoose = require('mongoose');
 const koaBodyparser = require('koa-bodyparser');
+
 const log = require('common/log');
-const spider = require('lib/spider');
 const router = require('common/router');
+const config = require('common/config');
+const spider = require('lib/spider');
 const monitor = require('lib/monitor');
 const onerror = require('middleware/onerror');
 
@@ -17,11 +19,11 @@ server.use(onerror(logger));
 server.use(log.middleware);
 server.use(koaBodyparser());
 server.use(router.routes());
-server.listen(3000);
+server.listen(config.database.port);
 
-logger.info('start koa server success, port = %d', 3000);
+logger.info('start koa server success, port = %d', config.database.port);
 
-mongoose.connect('mongodb://127.0.0.1/acg-subscription');
+mongoose.connect(`mongodb://${config.database.address}/${config.database.dbname}`);
 mongoose.Promise = global.Promise;
 mongoose.connection.on('connected', () => {
   logger.info('open database connection successfully.');
