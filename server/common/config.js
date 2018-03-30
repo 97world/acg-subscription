@@ -2,6 +2,10 @@ module.exports = {
   server: {
     port: 3000,
   },
+  token: {
+    secret: 'acg-subscription',
+    expiresIn: '1h',
+  },
   database: {
     address: '127.0.0.1',
     dbname: 'acg-subscription',

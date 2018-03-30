@@ -5,6 +5,7 @@ function middleware(logger) {
     try {
       await next();
     } catch (err) {
+      console.log(err);
       const errInfo = ERROR[err.name.toUpperCase()];
       if (errInfo) {
         ctx.status = errInfo.CODE;

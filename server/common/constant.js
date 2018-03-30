@@ -8,5 +8,9 @@ module.exports = {
       MSG: 'BulkWriteError',
       CODE: 409,
     },
+    UNAUTHORIZEDERROR: {
+      MSG: 'UnauthorizedError',
+      CODE: 401,
+    },
   }
 };

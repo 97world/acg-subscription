@@ -4,6 +4,7 @@ require('module').Module._initPaths();
 const Koa = require('koa');
 const mongoose = require('mongoose');
 const koaBodyparser = require('koa-bodyparser');
+const koaJWT = require('koa-jwt');
 
 const log = require('common/log');
 const router = require('common/router');
@@ -19,6 +20,7 @@ const { user, pwd, address, port, dbname } = config.database;
 server.use(onerror(logger));
 server.use(log.middleware);
 server.use(koaBodyparser());
+server.use(koaJWT({ secret: config.token.secret }).unless({ path: [/^\/user\/login/] }));
 server.use(router.routes());
 server.listen(config.server.port);
 

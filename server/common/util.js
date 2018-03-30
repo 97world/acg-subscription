@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer');
 const url = require('url');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const log = require('common/log');
 const config = require('common/config');
@@ -93,10 +95,29 @@ async function sendMail(option) {
                 sendInfo.email, JSON.stringify(sendResult));
 };
 
+function encryptPassword(password) {
+  const md5 = crypto.createHash('md5');
+  md5.update(password);
+  return md5.digest('hex');
+};
+
+function jwtVerify(token) {
+  return jwt.verify(token, config.token.secret);
+};
+
+function jwtSign(payload) {
+  return jwt.sign(payload, config.token.secret, {
+    expiresIn: config.token.expiresIn,
+  });
+};
+
 module.exports = {
   wait,
   getEpisodeType,
   getEpisodeInfo,
   parseRelativeURL,
   sendMail,
+  encryptPassword,
+  jwtVerify,
+  jwtSign,
 };
