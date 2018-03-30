@@ -14,6 +14,7 @@ const onerror = require('middleware/onerror');
 
 const server = new Koa();
 const logger = log.loggers.get('server');
+const { user, pwd, address, port, dbname } = config.database;
 
 server.use(onerror(logger));
 server.use(log.middleware);
@@ -23,7 +24,7 @@ server.listen(config.server.port);
 
 logger.info('start koa server success, port = %d', config.server.port);
 
-mongoose.connect(`mongodb://${config.database.address}/${config.database.dbname}`);
+mongoose.connect(`mongodb://${user}:${pwd}@${address}:${port}/${dbname}`);
 mongoose.Promise = global.Promise;
 mongoose.connection.on('connected', () => {
   logger.info('open database connection successfully.');

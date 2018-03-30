@@ -3,9 +3,11 @@ module.exports = {
     port: 3000,
   },
   database: {
-    port: 27017,
     address: '127.0.0.1',
     dbname: 'acg-subscription',
+    port: 5011,
+    user: 'acg',
+    pwd: 'acg',
   },
   mail: {
     user: 'no-reply@dtoweb.com',
