@@ -5,6 +5,9 @@ module.exports = {
   token: {
     secret: 'acg-subscription',
     expiresIn: '1h',
+    unlessPath: [
+      /^\/user\/login/,
+    ]
   },
   database: {
     address: '127.0.0.1',

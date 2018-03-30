@@ -20,7 +20,7 @@ const { user, pwd, address, port, dbname } = config.database;
 server.use(onerror(logger));
 server.use(log.middleware);
 server.use(koaBodyparser());
-server.use(koaJWT({ secret: config.token.secret }).unless({ path: [/^\/user\/login/] }));
+server.use(koaJWT({ secret: config.token.secret }).unless({ path: config.token.unlessPath }));
 server.use(router.routes());
 server.listen(config.server.port);
 
