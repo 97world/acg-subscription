@@ -1,5 +1,4 @@
 const userService = require('service/user');
-const util = require('common/util');
 
 async function put(ctx, next) {
   const id = ctx.params.id;
@@ -29,22 +28,6 @@ async function post(ctx, next) {
   ctx.status = 201;
 };
 
-async function login(ctx, next) {
-  let content = ctx.request.body;
-  const user = await userService.findOne({ username: content.username });
-  const password = util.encryptPassword(content.password);
-  if (password === user.password) {
-    const token = util.jwtSign({
-      username: user.username,
-      email: user.email,
-    });
-    ctx.status = 200;
-    ctx.body = { token };
-  } else {
-    ctx.throw(401);
-  }
-};
-
 module.exports = {
   '/user/:id': {
     GET: get,
@@ -54,8 +37,5 @@ module.exports = {
   '/user': {
     GET: find,
     POST: post,
-  },
-  '/user/login': {
-    POST: login,
   },
 };

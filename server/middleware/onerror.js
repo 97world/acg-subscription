@@ -5,7 +5,8 @@ function middleware(logger) {
     try {
       await next();
     } catch (err) {
-      console.log(err);
+      logger && logger.error(JSON.stringify(err));
+      err.originalError && (err = err.originalError);
       const errInfo = ERROR[err.name.toUpperCase()];
       if (errInfo) {
         ctx.status = errInfo.CODE;
@@ -14,7 +15,6 @@ function middleware(logger) {
         ctx.status = 500;
         ctx.body = 'unknow error';
       }
-      logger && logger.error(err);
     }
   };
 };
