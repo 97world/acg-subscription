@@ -5,6 +5,7 @@ const Koa = require('koa');
 const mongoose = require('mongoose');
 const koaBodyparser = require('koa-bodyparser');
 const koaJWT = require('koa-jwt');
+const koaViews = require('koa-views');
 
 const log = require('common/log');
 const config = require('common/config');
@@ -22,6 +23,7 @@ server.use(log.middleware);
 server.use(koaBodyparser());
 server.use(koaJWT({ secret: config.token.secret }).unless({ path: config.token.unlessPath }));
 server.use(router.routes());
+server.use(koaViews('../view', { map: { html: 'nunjucks' } }));
 server.listen(config.server.port);
 
 logger.info('start koa server success, port = %d', config.server.port);
