@@ -90,9 +90,7 @@ async function sendMail(option) {
     auth: { user, pass },
   });
   option.from = user;
-  const sendResult = await mailTransport.sendMail(option);
-  logger.info('send notification to %s success, sendResult = %s',
-                sendInfo.email, JSON.stringify(sendResult));
+  await mailTransport.sendMail(option);
 };
 
 function encryptPassword(password) {

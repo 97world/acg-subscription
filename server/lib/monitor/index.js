@@ -15,6 +15,7 @@ async function sendNotification(checkResult) {
     html: template('../../common/tpl/email-notify.art', checkResult.data),
   };
   await uti.sendMail(option);
+  logger.info('send notification success, option = %s', JSON.stringify(option));
 };
 
 /**
