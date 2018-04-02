@@ -7,10 +7,10 @@ const koaBodyparser = require('koa-bodyparser');
 const koaJWT = require('koa-jwt');
 
 const log = require('common/log');
-const router = require('common/router');
 const config = require('common/config');
 const spider = require('lib/spider');
 const monitor = require('lib/monitor');
+const router = require('middleware/router');
 const onerror = require('middleware/onerror');
 
 const server = new Koa();
