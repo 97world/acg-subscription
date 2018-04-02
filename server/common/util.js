@@ -85,7 +85,7 @@ async function sendMail(option) {
   const pass = config.mail.pass;
   const mailTransport = nodemailer.createTransport({
     host: config.mail.host,
-    port: config.mail.host,
+    port: config.mail.port,
     secureConnection: config.mail.secureConnection,
     auth: { user, pass },
   });
