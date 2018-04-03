@@ -6,6 +6,7 @@ async function home(ctx, next) {
 
 module.exports = {
   '/home': {
+    jwtUnless: true,
     GET: home,
   },
 };

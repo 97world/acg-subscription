@@ -22,7 +22,7 @@ const { user, pwd, address, port, dbname } = config.database;
 server.use(onerror(logger));
 server.use(log.middleware);
 server.use(koaBodyparser());
-server.use(koaJWT({ secret: config.token.secret }).unless({ path: config.token.unlessPath }));
+server.use(koaJWT({ secret: config.token.secret }).unless(router.unless));
 server.use(koaViews(path.join(__dirname, 'view'), { map: { html: 'nunjucks' } }));
 server.use(router.routes());
 server.listen(config.server.port);

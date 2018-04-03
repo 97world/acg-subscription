@@ -19,6 +19,7 @@ async function add(ctx, next) {
 
 module.exports = {
   '/token': {
+    jwtUnless: true,
     POST: add,
   }
 };
