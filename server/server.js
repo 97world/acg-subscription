@@ -1,6 +1,7 @@
 process.env.NODE_PATH = __dirname;
 require('module').Module._initPaths();
 
+const path = require('path');
 const Koa = require('koa');
 const mongoose = require('mongoose');
 const koaBodyparser = require('koa-bodyparser');
@@ -22,8 +23,8 @@ server.use(onerror(logger));
 server.use(log.middleware);
 server.use(koaBodyparser());
 server.use(koaJWT({ secret: config.token.secret }).unless({ path: config.token.unlessPath }));
+server.use(koaViews(path.join(__dirname, 'view'), { map: { html: 'nunjucks' } }));
 server.use(router.routes());
-server.use(koaViews('../view', { map: { html: 'nunjucks' } }));
 server.listen(config.server.port);
 
 logger.info('start koa server success, port = %d', config.server.port);

@@ -7,6 +7,7 @@ module.exports = {
     expiresIn: '1h',
     unlessPath: [
       /^\/token/,
+      /^\/home/,
     ]
   },
   database: {
