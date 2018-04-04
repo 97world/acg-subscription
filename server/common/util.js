@@ -6,8 +6,6 @@ const jwt = require('jsonwebtoken');
 const log = require('common/log');
 const config = require('common/config');
 
-const logger = log.loggers.get('server');
-
 function wait(millisecond) {
   function setTimeoutPromisify(millisecond) {
     return new Promise(resolve => setTimeout(resolve, millisecond));
@@ -39,37 +37,28 @@ function getEpisodeType(name) {
 };
 
 function getEpisodeInfo(name) {
-  let matchResult = name.match(/[\[\u4E00-\u9FA5]\d+([\.-]\d+)?[\]\u4E00-\u9FA5]/g);
+  let matchEpisodeStrResult = name.match(/[\[\u4E00-\u9FA5]\d+([\.-]\d+)?[\]\u4E00-\u9FA5]/g);
+  let matchEpisodeNumResult = null;
   let episodeStr = null;
   let episodeNum = null;
-  if (!matchResult || matchResult.length === 0) {
-    logger.warn('unable to parse episode, name = %s', name);
-  } else {
-    episodeStr = matchResult[0];
-    if (matchResult.length > 1) {
-      logger.warn(
-        'multiple results were found for parsing episode, name = %s, matchResult = %s',
-        name, matchResult.join(','),
-      );
-    }
+  if (matchEpisodeStrResult && matchEpisodeStrResult.length) {
+    episodeStr = matchEpisodeStrResult[0];
   }
   if (episodeStr) {
-    episodeStr = episodeStr.match(/\d+/g);
-    if (episodeStr.length > 1) {
-      episodeStr = episodeStr.map(episode => parseInt(episode)).join('-');
+    matchEpisodeNumResult = episodeStr.match(/\d+/g);
+    if (matchEpisodeNumResult.length > 1) {
+      episodeStr = matchEpisodeNumResult.map(episode => parseInt(episode)).join('-');
       episodeNum = parseInt(episodeStr.split('-')[0]);
-      logger.warn(
-        'multiple episodes were found, name = %s, episodeStr = %s, episodeNum = %d',
-        name, episodeStr, episodeNum,
-      );
     } else {
-      episodeNum = parseInt(episodeStr[0]);
+      episodeNum = parseInt(matchEpisodeNumResult[0]);
     }
   }
-  return {
+  return matchEpisodeStrResult ? {
+    matchEpisodeStrResult,
+    matchEpisodeNumResult,
     episodeStr,
     episodeNum,
-  };
+  } : null;
 };
 
 function parseRelativeURL(relativeURL, currentPageURL) {

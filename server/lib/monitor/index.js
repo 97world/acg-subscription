@@ -39,6 +39,19 @@ function checkPage(html, task) {
     const latestItemURL = latestItem.find('.title>a').attr('href');
     const latestItemName = latestItem.find('.title>a').text().trim();
     const latestItemEpisodeInfo = util.getEpisodeInfo(latestItemName);
+    if (!latestItemEpisodeInfo) {
+      logger.warn('unable to parse episode, latestItemName = %s', latestItemName);
+      checkResult.code = -1;
+      return checkResult;
+    }
+    if (latestItemEpisodeInfo.matchEpisodeStrResult.length > 1) {
+      logger.warn('multiple results were found for parsing episode, latestItemName = %s, matchEpisodeStrResult = %s',
+                  latestItemName, latestItemEpisodeInfo.matchEpisodeStrResult.join(','));
+    }
+    if (latestItemEpisodeInfo.matchEpisodeNumResult.length > 1) {
+      logger.warn('multiple episodeNum were found, latestItemName = %s, latestItemEpisodeInfo = %s',
+                  latestItemName, JSON.stringify(latestItemEpisodeInfo));
+    }
     if (!task.latestItemURL || latestItemURL === task.latestItemURL) {
       checkResult.code = 0;
     } else {

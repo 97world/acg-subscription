@@ -11,6 +11,18 @@ const logger = log.loggers.get('spider');
 function resolveSingleItemDOM($item, spiderURL) {
   const name = $item.find('.title>a').text().trim();
   const episodeInfo = util.getEpisodeInfo(name);
+  if (!episodeInfo) {
+    logger.warn('unable to parse episode, name = %s', name);
+    return null;
+  }
+  if (episodeInfo.matchEpisodeStrResult.length > 1) {
+    logger.warn('multiple results were found for parsing episode, name = %s, matchEpisodeStrResult = %s',
+                name, episodeInfo.matchEpisodeStrResult.join(','));
+  }
+  if (episodeInfo.matchEpisodeNumResult.length > 1) {
+    logger.warn('multiple episodeNum were found, name = %s, episodeInfo = %s',
+                name, JSON.stringify(episodeInfo));
+  }
   return {
     name,
     type: util.getEpisodeType(name),
@@ -45,7 +57,7 @@ async function spider(spiderURL) {
   list.each(async index => {
     const $item = list.eq(index);
     const data = resolveSingleItemDOM($item, spiderURL);
-    await topicService.add(data);
+    data && await topicService.add(data);
   });
 
   let btn4NextPage = getNextBtn($);
