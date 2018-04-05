@@ -16,6 +16,7 @@ controllerFile.forEach(fileName => {
     methods.forEach(method => {
       const methodController = group[method.toUpperCase()];
       if (methodController) {
+        router[method](URL, methodController);
         if (group.jwtUnless) {
           router.unless.path.push(URL);
         }

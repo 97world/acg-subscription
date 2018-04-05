@@ -5,6 +5,10 @@ async function home(ctx, next) {
 };
 
 module.exports = {
+  '/': {
+    jwtUnless: true,
+    GET: home,
+  },
   '/home': {
     jwtUnless: true,
     GET: home,

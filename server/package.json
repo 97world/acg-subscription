@@ -24,6 +24,7 @@
     "mongoose": "^5.0.10",
     "nodejieba": "^2.2.5",
     "nodemailer": "^4.6.3",
+    "nunjucks": "^3.1.2",
     "superagent": "^3.8.2",
     "winston": "^3.0.0-rc3",
     "winston-daily-rotate-file": "^3.0.0"
